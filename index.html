@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chemistry Module</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #07111d, #0d1728, #12213a);
+      color: #edf7ff;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .chem-module {
+      width: 760px;
+      max-width: 100%;
+      background: rgba(16, 24, 39, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 22px 50px rgba(0,0,0,0.35);
+    }
+
+    .chem-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      background: linear-gradient(90deg, #dfeeff, #d8c6ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .badge {
+      background: rgba(125, 211, 252, 0.12);
+      border: 1px solid rgba(125, 211, 252, 0.2);
+      color: #dff8ff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .topic-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .topic {
+      background: rgba(255,255,255,0.03);
+      color: #edf7ff;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      padding: 9px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: 0.2s ease;
+    }
+
+    .topic:hover {
+      background: rgba(125, 211, 252, 0.08);
+      border-color: rgba(125, 211, 252, 0.28);
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    input {
+      flex: 1;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      background: rgba(255,255,255,0.04);
+      color: white;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input::placeholder {
+      color: #a6bfd5;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 14px 18px;
+      background: linear-gradient(135deg, #60a5fa, #8b5cf6);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .answer {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(148,163,184,0.18);
+      border-radius: 16px;
+      padding: 18px;
+      color: #edf7ff;
+      line-height: 1.8;
+      font-size: 15px;
+      min-height: 120px;
+    }
+
+    .answer strong {
+      color: #7dd3fc;
+    }
+
+    @media (max-width: 600px) {
+      .search-box {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="chem-module">
+    <div class="chem-header">
+      <div class="title">Chemistry Module</div>
+      <div class="badge">Study Notes</div>
+    </div>
+
+    <div class="topic-list">
+      <div class="topic" data-topic="atom">Atom</div>
+      <div class="topic" data-topic="periodic table">Periodic Table</div>
+      <div class="topic" data-topic="ionic bond">Ionic Bond</div>
+      <div class="topic" data-topic="covalent bond">Covalent Bond</div>
+      <div class="topic" data-topic="acid">Acid</div>
+      <div class="topic" data-topic="base">Base</div>
+      <div class="topic" data-topic="pH">pH</div>
+      <div class="topic" data-topic="oxidation">Oxidation</div>
+      <div class="topic" data-topic="electrolysis">Electrolysis</div>
+      <div class="topic" data-topic="organic chemistry">Organic Chemistry</div>
+      <div class="topic" data-topic="mole">Mole</div>
+      <div class="topic" data-topic="rate of reaction">Rate of Reaction</div>
+    </div>
+
+    <div class="search-box">
+      <input type="text" id="chemInput" placeholder="Type a chemistry topic..." />
+      <button id="searchBtn">Search</button>
+    </div>
+
+    <div class="answer" id="answerBox">
+      <strong>Welcome:</strong> Type a topic like “atom”, “acid”, “pH”, “ionic bond”, or “organic chemistry”.
+    </div>
+  </div>
+
+  <script>
+    const chemistryData = {
+      atom: "An atom is the smallest unit of an element that still retains its chemical properties. It has protons and neutrons in the nucleus and electrons in shells surrounding the nucleus.",
+      "atomic number": "Atomic number is the number of protons in the nucleus of an atom. It identifies the element.",
+      "mass number": "Mass number is the total number of protons and neutrons in the nucleus of an atom.",
+      "periodic table": "The periodic table is a chart of elements arranged in order of increasing atomic number and repeated chemical properties.",
+      "group": "A group is a vertical column in the periodic table. Elements in the same group usually show similar chemical behavior.",
+      "period": "A period is a horizontal row in the periodic table. Elements in the same period have the same number of electron shells.",
+      "ionic bond": "An ionic bond is formed by transfer of electrons from one atom to another, creating oppositely charged ions that attract each other.",
+      "covalent bond": "A covalent bond is formed when two atoms share one or more pairs of electrons.",
+      "metallic bond": "A metallic bond is the attraction between positive metal ions and a sea of delocalized electrons.",
+      "acid": "An acid is a substance that produces hydrogen ions (H+) in aqueous solution. Acids have a sour taste and turn blue litmus red.",
+      "base": "A base is a substance that produces hydroxide ions (OH−) in water or accepts protons. Bases feel slippery and turn red litmus blue.",
+      "ph": "pH is a measure of how acidic or alkaline a solution is. A pH below 7 is acidic, 7 is neutral, and above 7 is alkaline.",
+      "neutralization": "Neutralization is the reaction between an acid and a base to form salt and water.",
+      "oxidation": "Oxidation is the gain of oxygen, loss of hydrogen, or loss of electrons.",
+      "reduction": "Reduction is the loss of oxygen, gain of hydrogen, or gain of electrons.",
+      "redox reaction": "A redox reaction is a reaction in which both oxidation and reduction occur together.",
+      "electrolysis": "Electrolysis is the decomposition of a substance by passing an electric current through it.",
+      "cathode": "The cathode is the negative electrode in electrolysis, where reduction takes place.",
+      "anode": "The anode is the positive electrode in electrolysis, where oxidation takes place.",
+      "mole": "A mole is the amount of substance that contains Avogadro’s number of particles, 6.022 × 10^23.",
+      "molar mass": "Molar mass is the mass of one mole of a substance, usually expressed in g/mol.",
+      "rate of reaction": "The rate of reaction is how fast reactants are used up or products are formed.",
+      "catalyst": "A catalyst increases the rate of a chemical reaction without being used up in the process.",
+      "organic chemistry": "Organic chemistry is the study of carbon-containing compounds and their reactions.",
+      "hydrocarbon": "A hydrocarbon is a compound made only of hydrogen and carbon.",
+      "alkane": "An alkane is a saturated hydrocarbon containing only single bonds.",
+      "alkene": "An alkene is an unsaturated hydrocarbon containing at least one double bond.",
+      "alkyne": "An alkyne is an unsaturated hydrocarbon containing at least one triple bond.",
+      "alcohol": "An alcohol contains the hydroxyl group (-OH). Example: ethanol.",
+      "carboxylic acid": "A carboxylic acid contains the carboxyl group (-COOH). Example: ethanoic acid.",
+      "ester": "An ester is formed by reacting an alcohol with a carboxylic acid. Esters often have sweet smells.",
+      "solute": "A solute is the substance that dissolves in a solvent.",
+      "solvent": "A solvent is the substance that dissolves the solute.",
+      "solution": "A solution is a homogeneous mixture of solute and solvent.",
+      "saturated solution": "A saturated solution contains the maximum amount of solute that can dissolve at a given temperature.",
+      "unsaturated solution": "An unsaturated solution can still dissolve more solute.",
+      "solubility": "Solubility is the maximum amount of solute that can dissolve in a given amount of solvent at a set temperature.",
+      "reaction rate": "Reaction rate is the speed at which reactants are consumed or products are formed.",
+      "temperature effect": "Increasing temperature usually increases reaction rate because particles move faster and collide more often.",
+      "concentration effect": "Increasing concentration often increases reaction rate because there are more particles in the same space.",
+      "surface area effect": "Increasing surface area increases rate of reaction because more particles are exposed to react.",
+      "isotope": "Isotopes are atoms of the same element with the same atomic number but different numbers of neutrons.",
+      "noble gas": "Noble gases are Group 18 elements. They have full outer electron shells and are generally unreactive.",
+      "halogen": "Halogens are Group 17 elements such as fluorine, chlorine, and bromine. They are highly reactive nonmetals.",
+      "gas laws": "Gas laws describe the relationship between pressure, volume, and temperature of gases.",
+      "boyles law": "Boyle’s law states that for a fixed amount of gas at constant temperature, pressure is inversely proportional to volume.",
+      "charles law": "Charles’s law states that for a fixed amount of gas at constant pressure, volume is directly proportional to absolute temperature.",
+      "diffusion": "Diffusion is the movement of particles from a region of higher concentration to lower concentration.",
+      "crystallization": "Crystallization is the formation of crystals from a solution as it cools or evaporates.",
+      "distillation": "Distillation separates liquids by differences in boiling point.",
+      "filtration": "Filtration separates insoluble solids from liquids using a filter.",
+      "chromatography": "Chromatography separates compounds based on how they move through a medium.",
+      "matter": "Matter is anything that has mass and occupies space.",
+      "states of matter": "Matter exists mainly as solid, liquid, and gas. These states differ in particle arrangement and movement.",
+      "solid": "In a solid, particles are tightly packed and vibrate in place.",
+      "liquid": "In a liquid, particles are close together but can move around each other.",
+      "gas": "In a gas, particles are far apart and move freely.",
+      "melting": "Melting is the change from solid to liquid when heat is supplied.",
+      "boiling": "Boiling is the change from liquid to gas throughout the liquid at its boiling point.",
+      "condensation": "Condensation is the change from gas to liquid.",
+      "evaporation": "Evaporation is the change from liquid to gas at the surface of the liquid.",
+      "sublimation": "Sublimation is the change from solid directly to gas.",
+      "deposition": "Deposition is the change from gas directly to solid.",
+      "molecule": "A molecule is a group of two or more atoms joined by chemical bonds.",
+      "compound": "A compound is a substance made of different elements chemically combined.",
+      "mixture": "A mixture is made of different substances physically combined and can be separated easily.",
+      "salt": "A salt is a compound formed when the hydrogen of an acid is replaced by a metal or ammonium ion.",
+      "water": "Water is a polar molecule made of hydrogen and oxygen with formula H2O.",
+      "oxygen": "Oxygen is a reactive gas needed for respiration and combustion.",
+      "hydrogen": "Hydrogen is the lightest element and is often present in acids and water.",
+      "carbon dioxide": "Carbon dioxide is a gas produced during respiration and combustion, and it turns limewater milky."
+    };
+
+    function getChemistryAnswer(topic) {
+      const key = topic.trim().toLowerCase();
+
+      if (!key) {
+        return "Please type a chemistry topic to see the answer.";
+      }
+
+      if (chemistryData[key]) {
+        return chemistryData[key];
+      }
+
+      const foundKey = Object.keys(chemistryData).find(k => key.includes(k));
+      if (foundKey) {
+        return chemistryData[foundKey];
+      }
+
+      return "I do not have a detailed answer for that topic yet. Try one of the chips or use terms like atom, acid, pH, ionic bond, organic chemistry, or electrolysis.";
+    }
+
+    document.getElementById("searchBtn").addEventListener("click", () => {
+      const topic = document.getElementById("chemInput").value;
+      const answer = getChemistryAnswer(topic);
+      document.getElementById("answerBox").innerHTML = "<strong>Answer:</strong> " + answer;
+    });
+
+    document.getElementById("chemInput").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        const topic = document.getElementById("chemInput").value;
+        const answer = getChemistryAnswer(topic);
+        document.getElementById("answerBox").innerHTML = "<strong>Answer:</strong> " + answer;
+      }
+    });
+
+    document.querySelectorAll(".topic").forEach(item => {
+      item.addEventListener("click", () => {
+        const topic = item.dataset.topic;
+        const answer = getChemistryAnswer(topic);
+        document.getElementById("chemInput").value = topic;
+        document.getElementById("answerBox").innerHTML = "<strong>Answer:</strong> " + answer;
+      });
+    });
+  </script>
+</body>
+</html>
